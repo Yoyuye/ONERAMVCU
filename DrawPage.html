@@ -18,6 +18,7 @@
         canvas {
             display: block;
             margin: auto;
+            touch-action: none; /* Disable touch gestures on canvas */
         }
 
         div {
@@ -90,28 +91,63 @@
             context.clearRect(0, 0, canvasElement.width, canvasElement.height);
         };
 
-        let isDrawing;
-        canvasElement.onmousedown = (e) => {
+        let isDrawing = false;
+
+        function startDrawing(x, y) {
             isDrawing = true;
             context.beginPath();
             context.lineWidth = size;
             context.strokeStyle = color;
             context.lineJoin = "round";
             context.lineCap = "round";
-            context.moveTo(e.clientX, e.clientY);
-        };
+            context.moveTo(x, y);
+        }
 
-        canvasElement.onmousemove = (e) => {
+        function draw(x, y) {
             if (isDrawing) {
-                context.lineTo(e.clientX, e.clientY);
+                context.lineTo(x, y);
                 context.stroke();
             }
-        };
+        }
 
-        canvasElement.onmouseup = function () {
-            isDrawing = false;
-            context.closePath();
-        };
+        function stopDrawing() {
+            if (isDrawing) {
+                isDrawing = false;
+                context.closePath();
+            }
+        }
+
+        canvasElement.addEventListener("mousedown", (e) => {
+            startDrawing(e.clientX, e.clientY);
+        });
+
+        canvasElement.addEventListener("mousemove", (e) => {
+            draw(e.clientX, e.clientY);
+        });
+
+        canvasElement.addEventListener("mouseup", () => {
+            stopDrawing();
+        });
+
+        canvasElement.addEventListener("touchstart", (e) => {
+            const touch = e.touches[0];
+            const rect = canvasElement.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            startDrawing(x, y);
+        });
+
+        canvasElement.addEventListener("touchmove", (e) => {
+            const touch = e.touches[0];
+            const rect = canvasElement.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            draw(x, y);
+        });
+
+        canvasElement.addEventListener("touchend", () => {
+            stopDrawing();
+        });
     </script>
 </body>
 </html>
