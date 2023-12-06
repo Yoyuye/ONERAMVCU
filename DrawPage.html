@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-image: url(Rao.jpeg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        canvas {
+            display: block;
+            margin: auto;
+        }
+
+        div {
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .size {
+            margin-top: 5px;
+        }
+
+        #clear {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <canvas id="canvas" width="600" height="900"></canvas>
+    </div>
+    <div>
+        <span>Size: </span>
+        <input type="range" min="1" max="50" value="10" class="size" id="sizeRange">
+    </div>
+    <div>
+        <span>Color: </span>
+        <input type="radio" name="colorRadio" value="black" checked />
+        <label for="black">Black</label>
+        <input type="radio" name="colorRadio" value="white" />
+        <label for="white">White</label>
+        <input type="radio" name="colorRadio" value="red" />
+        <label for="red">Red</label>
+        <input type="radio" name="colorRadio" value="green" />
+        <label for="green">Green</label>
+        <input type="radio" name="colorRadio" value="blue" />
+        <label for="blue">Blue</label>
+    </div>
+    <div>
+        <button id="clear">Clear</button>
+    </div>
+    <br />
+    <p>
+        Show him how you really feel
+    </p>
+
+    <script src="src/index.js"></script>
+    <script>
+        const sizeElement = document.querySelector("#sizeRange");
+        let size = sizeElement.value;
+        sizeElement.oninput = (e) => {
+            size = e.target.value;
+        };
+
+        const colorElement = document.getElementsByName("colorRadio");
+        let color;
+        colorElement.forEach((c) => {
+            if (c.checked) color = c.value;
+        });
+        colorElement.forEach((c) => {
+            c.onclick = () => {
+                color = c.value;
+            };
+        });
+
+        const canvasElement = document.getElementById("canvas");
+        const context = canvasElement.getContext("2d");
+
+        const clearElement = document.getElementById("clear");
+        clearElement.onclick = () => {
+            context.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        };
+
+        let isDrawing;
+        canvasElement.onmousedown = (e) => {
+            isDrawing = true;
+            context.beginPath();
+            context.lineWidth = size;
+            context.strokeStyle = color;
+            context.lineJoin = "round";
+            context.lineCap = "round";
+            context.moveTo(e.clientX, e.clientY);
+        };
+
+        canvasElement.onmousemove = (e) => {
+            if (isDrawing) {
+                context.lineTo(e.clientX, e.clientY);
+                context.stroke();
+            }
+        };
+
+        canvasElement.onmouseup = function () {
+            isDrawing = false;
+            context.closePath();
+        };
+    </script>
+</body>
+</html>
