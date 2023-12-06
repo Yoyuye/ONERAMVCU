@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @font-face {
+      font-family: 'Merriweather';
+      src: url(Merriweather-Light.ttf);
+    }
+    body, html {
+      background-image: url("VCUMAP.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 200%;
+    }
+
+    .parent-div {
+        position: relative;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      justify-content: center;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      width: 50px;
+      height: 50px;
+      z-index: 6;
+    }
+
+    .circle1 { top: 230px; left: 375px; }
+    .circle2 { top: 298px; left: 375px; }
+    .circle3 { top: 332px; left: 360px; }
+    .circle4 { top: 565px; left: 418px; }
+    .circle5 { top: 665px; left: 418px; }
+    .circle6 { top: 1000px; left: 260px; }
+    .circle7 { top: 1800px; left: 500px; }
+    .circle8 { top: 1850px; left: 620px; }
+    .circle { background-color: rgb(175, 133, 27); opacity: 60%; }
+
+    .bubble-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        font-size: 3px;
+    }
+
+    .circle.enlarged {
+    transform: scale(10);
+    transform-origin: center;
+    z-index: 10;
+}
+
+
+    .enlarged .bubble-content {
+        opacity: 1;
+        font-size: 3px;
+        overflow: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: calc(80% - 0.3px);
+        max-width: 200px;
+        height: 80%;
+        max-height: 200px;
+    }
+
+    /* Media Queries for Responsive Design */
+    @media (max-width: 390px) {
+      /* Adjustments for mobile devices */
+      .circle1, .circle2, .circle3, .circle4, .circle5, .circle6, .circle7 {
+  
+        /* Add specific styles for mobile devices here */
+      }
+    }
+
+    @media (min-width: 601px) and (max-width: 1024px) {
+      /* Adjustments for tablets */
+      .circle1, .circle2, .circle3, .circle4, .circle5, .circle6, .circle7 {
+        /* Add specific styles for tablets here */
+      }
+    }
+
+    .color-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgb(255, 255, 255);
+      opacity: 0.5;
+      z-index: 5;
+      transition: background-color 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="circle circle1" onclick="toggleBubble(this)">
+    <div class="bubble-content">Vcu Purchased Mansion Nightclub for 3.5 Million Dollars, about four times its estimated value.  This was after multiple attempts to have the primarily black-attended nightclub shut down, or halt business.  This was also during a time where VCU adjunct professors were pleading to the administration for more livable wages.
+     <br>
+    The University is still unsure what the venue will be turned into, but as for now, it will collect dust; a hollow husk of the culture that Grace street held separate from the institution.
+    </div>
+  </div>
+  <div class="circle circle2" onclick="toggleBubble(this)">
+    <div class="bubble-content"> The property that holds Ipanema cafe, as well as Verify Recording Studio and Presidential Cuts barber shop has been purchased by VCU for $4 Million, from the previous property owner.  The owners of the businesses using this venue were not notified about the sale until after it was completed, and hope that it does not effect any of their businesses in the future.</div>
+  </div>
+  <div class="circle circle3" onclick="toggleBubble(this)">
+    <div class="bubble-content">"The foundations high offers raise property values, and the construction of dorms dulls the neighborhoods character.  That kind of overbidding really affects the local market." -Kirstin Reed</div>
+  </div>
+  <div class="circle circle4" onclick="toggleBubble(this)">
+    <div class="bubble-content">These three small buildings on the southeast corner of Broad and Belvedere have been bought up with no disclosed plans on how they will be used for the university.</div>
+  </div>
+  <div class="circle circle5" onclick="toggleBubble(this)">
+    <div class="bubble-content">  The VCU Real Estate Foundation, established in 1992, makes purchases of real estate, and supports itself by leasing out these properties or selling themm to the university. As of 2022 they reported $48 Million in net assets.  When the university needs new properties, they can purchase them from the foundation, even if they're in a budget shortfall.  Land owned by VCU is tax exempt. </div>
+  </div>
+  <div class="circle circle6" onclick="toggleBubble(this)">
+    <div class="bubble-content">Buildings spanning Broad Street from the Monroe Park have been being systematically purchased by the university as a part of their "ONE VCU Master plan," a multimillion dollar, 6 year development initiative set to connect the two campuses as well as create more throughways and academic centers.  Meanwhile, adjunct professors are still demanding higher wages.</div>
+  </div>
+  <div class="circle circle7" onclick="toggleBubble(this)">
+    <div class="bubble-content">“They arent seriously considering ways of dealing with the bigger problem of adjunct equity in a way that doesnt negatively impact the student body,” said a Students For Equal Adjunct Pay member who declined to give their name. “There have been promises of action and effort to find a way around this problem.”</div>
+  </div>
+  <div class="circle circle8" onclick="toggleBubble(this)">
+    <div class="bubble-content">Content for circle1...</div>
+  </div>
+  
+  <!-- Add other circles and their content -->
+
+  <div class="color-overlay"></div>
+
+  <script>
+       function toggleBubble(element) {
+            element.classList.toggle("enlarged");
+        }
+
+    window.addEventListener("scroll", () => {
+    const overlay = document.querySelector(".color-overlay");
+    const scrollPercentage =
+      window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    const color = scrollPercentage < 0.5 ? 'rgba(255, 165, 0, 0.5)' : 'rgba(0, 0, 0, 0.5)';
+    overlay.style.backgroundColor = color;
+  });
+  </script>
+</body>
+</html>
